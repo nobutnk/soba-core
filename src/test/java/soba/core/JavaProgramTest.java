@@ -16,7 +16,7 @@ public class JavaProgramTest implements ExampleProgram {
 	private static JavaProgram program;
 	
 	public static JavaProgram readExampleProgram() {
-		Directory dir = new Directory(new File("bin/soba/testdata/"));
+		Directory dir = new Directory(new File("target/test-classes/soba/testdata/"));
 		JavaProgram program = new JavaProgram(new IClassList[] {dir});
 		return program;
 	}

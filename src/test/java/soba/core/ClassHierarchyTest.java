@@ -47,15 +47,15 @@ public class ClassHierarchyTest implements ExampleProgram {
 	
 	@BeforeClass
 	public static void setUpClassInfo() throws IOException {
-		c = new ClassInfo("C.class", new FileInputStream("bin/" + CLASS_C + ".class"));
-		d = new ClassInfo("D.class", new FileInputStream("bin/" + CLASS_D + ".class"));
-		e = new ClassInfo("E.class", new FileInputStream("bin/" + CLASS_E + ".class"));
-		f = new ClassInfo("F.class", new FileInputStream("bin/" + CLASS_F + ".class"));
-		g = new ClassInfo("G.class", new FileInputStream("bin/" + CLASS_G + ".class"));
-		h = new ClassInfo("H.class", new FileInputStream("bin/" + CLASS_H + ".class"));
-		i = new ClassInfo("I.class", new FileInputStream("bin/" + CLASS_I + ".class"));
-		j = new ClassInfo("I.class", new FileInputStream("bin/" + CLASS_J + ".class"));
-		k = new ClassInfo("I.class", new FileInputStream("bin/" + CLASS_K + ".class"));
+		c = new ClassInfo("C.class", new FileInputStream("target/test-classes/" + CLASS_C + ".class"));
+		d = new ClassInfo("D.class", new FileInputStream("target/test-classes/" + CLASS_D + ".class"));
+		e = new ClassInfo("E.class", new FileInputStream("target/test-classes/" + CLASS_E + ".class"));
+		f = new ClassInfo("F.class", new FileInputStream("target/test-classes/" + CLASS_F + ".class"));
+		g = new ClassInfo("G.class", new FileInputStream("target/test-classes/" + CLASS_G + ".class"));
+		h = new ClassInfo("H.class", new FileInputStream("target/test-classes/" + CLASS_H + ".class"));
+		i = new ClassInfo("I.class", new FileInputStream("target/test-classes/" + CLASS_I + ".class"));
+		j = new ClassInfo("I.class", new FileInputStream("target/test-classes/" + CLASS_J + ".class"));
+		k = new ClassInfo("I.class", new FileInputStream("target/test-classes/" + CLASS_K + ".class"));
 	}
 	
 	@Before

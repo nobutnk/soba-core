@@ -15,7 +15,7 @@ public class ClassInfoTest implements ExampleProgram {
 
 	@Test
 	public void testClassInfo01() throws Exception {
-		String fileName = "bin/" + CLASS_D + ".class";
+		String fileName = "target/test-classes/" + CLASS_D + ".class";
 		ClassInfo c = new ClassInfo(fileName, new FileInputStream(fileName));
 		
 		assertThat(c.getPackageName(), is("soba/testdata/inheritance1"));
@@ -46,7 +46,7 @@ public class ClassInfoTest implements ExampleProgram {
 	
 	@Test
 	public void testClassInfo02() throws Exception {
-		String fileName = "bin/" + CLASS_H + ".class";
+		String fileName = "target/test-classes/" + CLASS_H + ".class";
 		ClassInfo c = new ClassInfo(fileName, new FileInputStream(fileName), "label");
 		
 		assertThat(c.getPackageName(), is("soba/testdata/inheritance2"));
@@ -76,7 +76,7 @@ public class ClassInfoTest implements ExampleProgram {
 	
 	@Test
 	public void testLibrary01() throws IOException {
-		String fileName = "bin/" + CLASS_H + ".class";
+		String fileName = "target/test-classes/" + CLASS_H + ".class";
 		ClassInfo c = ClassInfo.createLibraryClass(fileName, new FileInputStream(fileName));
 		assertThat(c.isLibrary(), is(true));
 	}

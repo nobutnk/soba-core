@@ -18,7 +18,7 @@ public class DirectoryTest {
 		assertThat(dir.length, is(1));
 		assertThat(dir[0].getDirectory(), is(f));
 
-		File soba = new File(f, "soba");
+		File soba = new File(f, "test");
 		Directory[] subdirs = Directory.listSubdirectories(f, 1);
 		assertThat(dir.length, is(1));
 		assertThat(subdirs[0].getDirectory(), is(soba));

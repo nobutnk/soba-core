@@ -30,29 +30,29 @@ public class ClasspathUtilTest {
 	
 	@Test
 	public void testGetClassList() {
-		String[] fileArray = new String[]{"bin/soba/testdata"};
+		String[] fileArray = new String[]{"target/test-classes/soba/testdata"};
 		IClassList[] results1 = ClasspathUtil.getClassList(fileArray);
 		assertThat(results1, is(arrayWithSize(1)));
 		IClassList[] results2 = ClasspathUtil.getClassList(fileArray, "");
 		assertThat(results2, is(arrayWithSize(1)));
 		
 		List<String> fileList = new ArrayList<>();
-		fileList.add("bin/soba/testdata");
+		fileList.add("target/test-classes/soba/testdata");
 		IClassList[] results3 = ClasspathUtil.getClassList(fileList);
 		assertThat(results3, is(arrayWithSize(1)));
 		IClassList[] results4 = ClasspathUtil.getClassList(fileList, null);
 		assertThat(results4, is(arrayWithSize(1)));
 		
-		String[] zipFile = new String[]{"lib/asm-debug-all-5.0.3.jar"};
+		String[] zipFile = new String[]{"target/test-classes/lib/asm-debug-all-5.0.3.jar"};
 		IClassList[] results5 = ClasspathUtil.getClassList(zipFile);
 		assertThat(results5, is(arrayWithSize(1)));
 		
-		String[] classFile = new String[]{"bin/soba/testdata/DefUseTestData.class"};
+		String[] classFile = new String[]{"target/test-classes/soba/testdata/DefUseTestData.class"};
 		IClassList[] results6 = ClasspathUtil.getClassList(classFile);
 		assertThat(results6, is(arrayWithSize(1)));
 		
-		String[] appFiles = new String[]{"bin/soba/testdata/DefUseTestData.class"};
-		String[] libFiles = new String[]{"lib/asm-debug-all-5.0.3.jar"};
+		String[] appFiles = new String[]{"target/test-classes/soba/testdata/DefUseTestData.class"};
+		String[] libFiles = new String[]{"target/test-classes/lib/asm-debug-all-5.0.3.jar"};
 		IClassList[] results7 = ClasspathUtil.getClassList(appFiles, libFiles);
 		assertThat(results7, is(arrayWithSize(2)));
 		assertThat(results7[1].getLabel(), is(ClassInfo.LIBRARY_LABEL));
