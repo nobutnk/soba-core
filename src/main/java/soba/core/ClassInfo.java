@@ -36,6 +36,8 @@ public class ClassInfo {
 	
 	private String superclassName;
 	private List<String> interfaceNames;
+	private boolean isInterface;
+	private boolean isEnum;
 	
 	/**
 	 * Creates a new <code>ClassInfo</code> instance from a binary stream.
@@ -90,6 +92,16 @@ public class ClassInfo {
 			packageName = className.substring(0, pkgIndex);
 		} else {
 			packageName = DEFAULT_PACKAGE;
+		}
+		
+		if ((classNode.access & Opcodes.ACC_INTERFACE) != 0){
+		    // is interface
+		    isInterface = true;
+		}
+		
+		if ((classNode.access & Opcodes.ACC_ENUM) != 0) {
+		    // is enum
+		    isEnum = true;
 		}
 		
 		if (classNode.sourceFile != null) {
@@ -273,4 +285,17 @@ public class ClassInfo {
 		return null;
 	}
 	
+	/**
+	 * @return if interface, return true.
+	 */
+	public boolean isInterface() {
+	    return this.isInterface;
+	}
+	
+	/**
+	 * @return if Enum, return true
+	 */
+	public boolean isEnum() {
+	    return this.isEnum;
+	}
 }

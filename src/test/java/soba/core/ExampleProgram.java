@@ -11,6 +11,7 @@ public interface ExampleProgram {
 	public static final String CLASS_I = "soba/testdata/inheritance1/I";
 	public static final String CLASS_J = "soba/testdata/inheritance1/J";
 	public static final String CLASS_K = "soba/testdata/inheritance1/K";
+	public static final String CLASS_L = "soba/testdata/inheritance1/L";
 
 	
 }
