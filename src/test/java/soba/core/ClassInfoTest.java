@@ -42,6 +42,10 @@ public class ClassInfoTest implements ExampleProgram {
 		
 		assertThat(c.getFieldCount(), is(0));
 		assertThat(c.getFields(), is(empty()));
+		
+		assertThat(c.isInterface(), is(false));
+		assertThat(c.isEnum(), is(false));
+		
 	}
 	
 	@Test
@@ -80,5 +84,60 @@ public class ClassInfoTest implements ExampleProgram {
 		ClassInfo c = ClassInfo.createLibraryClass(fileName, new FileInputStream(fileName));
 		assertThat(c.isLibrary(), is(true));
 	}
+	
+	@Test
+    public void testClassInfo03() throws Exception {
+        String fileName = "target/test-classes/" + CLASS_I + ".class";
+        ClassInfo c = new ClassInfo(fileName, new FileInputStream(fileName));
+        
+        assertThat(c.getPackageName(), is("soba/testdata/inheritance1"));
+        assertThat(c.getClassName(), is(CLASS_I));
+        assertThat(c.getHash(), is(notNullValue()));
+        assertThat(c.getClassDirPath(), is("soba" + File.separator + "testdata" + File.separator + "inheritance1"));
+        assertThat(c.getClassFileName(), is(fileName));
+        assertThat(c.getSourceFileName(), is("soba" + File.separator + "testdata" + File.separator + "inheritance1" + File.separator + "I.java"));
+        assertThat(c.getLabel(), is(nullValue()));
+        assertThat(c.isLibrary(), is(false));
+        
+        assertThat(c.getMethodCount(), is(1));
+        assertThat(c.getMethods(), hasSize(1));
+        assertThat(c.getMethod(0), is(notNullValue()));
+        assertThat(c.findMethod("m", "()V"), is(notNullValue()));
+        
+        assertThat(c.getFieldCount(), is(1));
+        assertThat(c.getFields().get(0), is(notNullValue()));
+        
+        assertThat(c.isInterface(), is(true));
+        assertThat(c.isEnum(), is(false));
+    }
+	
+	@Test
+    public void testClassInfo04() throws Exception {
+        String fileName = "target/test-classes/" + CLASS_L + ".class";
+        ClassInfo c = new ClassInfo(fileName, new FileInputStream(fileName));
+        
+        assertThat(c.getPackageName(), is("soba/testdata/inheritance1"));
+        assertThat(c.getClassName(), is(CLASS_L));
+        assertThat(c.getHash(), is(notNullValue()));
+        assertThat(c.getClassDirPath(), is("soba" + File.separator + "testdata" + File.separator + "inheritance1"));
+        assertThat(c.getClassFileName(), is(fileName));
+        assertThat(c.getSourceFileName(), is("soba" + File.separator + "testdata" + File.separator + "inheritance1" + File.separator + "L.java"));
+        assertThat(c.getLabel(), is(nullValue()));
+        assertThat(c.isLibrary(), is(false));
+        
+        assertThat(c.getMethodCount(), is(5));
+        assertThat(c.getMethods(), hasSize(5));
+        assertThat(c.getMethod(0), is(notNullValue()));
+        assertThat(c.findMethod("m", "(Lsoba/testdata/inheritance1/L;)Z"), is(notNullValue()));
+        // for Enum
+        assertThat(c.findMethod("valueOf", "(Ljava/lang/String;)Lsoba/testdata/inheritance1/L;"), is(notNullValue()));
+        // for Enum
+        assertThat(c.findMethod("values", "()[Lsoba/testdata/inheritance1/L;"), is(notNullValue()));
+        assertThat(c.getFieldCount(), is(4));
+        assertThat(c.getFields().get(0), is(notNullValue()));
+        
+        assertThat(c.isInterface(), is(false));
+        assertThat(c.isEnum(), is(true));
+    }
 	
 }
