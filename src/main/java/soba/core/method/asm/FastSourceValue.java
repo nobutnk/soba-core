@@ -32,8 +32,6 @@
  */
 package soba.core.method.asm;
 
-
-
 import java.util.Arrays;
 
 import gnu.trove.list.array.TIntArrayList;
@@ -51,12 +49,12 @@ public class FastSourceValue implements Value {
      * Index of instructions that define the value.
      */
     private int[] instructions;
-    
+
     private static int[] EMPTY_ARRAY = new int[0];
 
     public FastSourceValue(int size) {
-    	this.size = size;
-    	this.instructions = EMPTY_ARRAY;
+        this.size = size;
+        this.instructions = EMPTY_ARRAY;
     }
 
     public FastSourceValue(int size, int instructionIndex) {
@@ -68,86 +66,86 @@ public class FastSourceValue implements Value {
         this.size = size;
         this.instructions = instructionIndices;
     }
-    
+
     public int getSize() {
         return size;
     }
-    
+
     public int[] getInstructions() {
-    	return instructions;
+        return instructions;
     }
-    
+
     public FastSourceValue(FastSourceValue base1, FastSourceValue base2) {
-    	this.size = Math.min(base1.size, base2.size);
-    	TIntArrayList list = new TIntArrayList(base1.instructions.length + base2.instructions.length);
-    	int index1 = 0;
-    	int index2 = 0;
-    	while (index1 < base1.instructions.length && index2 < base2.instructions.length) {
-			int v1 = base1.instructions[index1];
-			int v2 = base2.instructions[index2];
-			if (v1 == v2) {
-				// Add only one element (behaves as "Set")
-				list.add(v1);
-				index1++;
-				index2++;
-			} else if (v1 < v2) {
-				list.add(v1);
-				index1++;
-			} else { //v1 > v2
-				list.add(v2);
-				index2++;
-			}
-    	}
-    	while (index1 < base1.instructions.length) {
-    		list.add(base1.instructions[index1]);
-    		index1++;
-    	}
-    	while (index2 < base2.instructions.length) {
-    		list.add(base2.instructions[index2]);
-    		index2++;
-    	}
-    	this.instructions = list.toArray();
+        this.size = Math.min(base1.size, base2.size);
+        TIntArrayList list = new TIntArrayList(base1.instructions.length + base2.instructions.length);
+        int index1 = 0;
+        int index2 = 0;
+        while (index1 < base1.instructions.length && index2 < base2.instructions.length) {
+            int v1 = base1.instructions[index1];
+            int v2 = base2.instructions[index2];
+            if (v1 == v2) {
+                // Add only one element (behaves as "Set")
+                list.add(v1);
+                index1++;
+                index2++;
+            } else if (v1 < v2) {
+                list.add(v1);
+                index1++;
+            } else { // v1 > v2
+                list.add(v2);
+                index2++;
+            }
+        }
+        while (index1 < base1.instructions.length) {
+            list.add(base1.instructions[index1]);
+            index1++;
+        }
+        while (index2 < base2.instructions.length) {
+            list.add(base2.instructions[index2]);
+            index2++;
+        }
+        this.instructions = list.toArray();
     }
-    
+
     public boolean containsAll(FastSourceValue another) {
-    	int thisIndex = 0;
-    	int anotherIndex = 0;
-    	while (anotherIndex < another.instructions.length) {
-    		if (thisIndex < this.instructions.length) {
-    			int thisValue = instructions[thisIndex];
-    			int anotherValue = another.instructions[anotherIndex];
-    			if (thisValue > anotherValue) {
-    				return false;
-    			} else if (thisValue == anotherValue) {
-    				thisIndex++;
-    				anotherIndex++;
-    			} else { // thisValue < anotherValue
-    				thisIndex++;
-    			}
-    			
-    		} else {
-    			// End of this.instructions, but not the end of another.instruction
-    			return false;
-    		}
-    	}
-    	return true;
+        int thisIndex = 0;
+        int anotherIndex = 0;
+        while (anotherIndex < another.instructions.length) {
+            if (thisIndex < this.instructions.length) {
+                int thisValue = instructions[thisIndex];
+                int anotherValue = another.instructions[anotherIndex];
+                if (thisValue > anotherValue) {
+                    return false;
+                } else if (thisValue == anotherValue) {
+                    thisIndex++;
+                    anotherIndex++;
+                } else { // thisValue < anotherValue
+                    thisIndex++;
+                }
+
+            } else {
+                // End of this.instructions, but not the end of another.instruction
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
-     * Two FastSourceValues are the same if the value 
-     * is defined by the same instructions.
+     * Two FastSourceValues are the same if the value is defined by the same
+     * instructions.
      */
     public boolean equals(Object another) {
-    	if (another instanceof FastSourceValue) {
-            FastSourceValue v = (FastSourceValue)another;
+        if (another instanceof FastSourceValue) {
+            FastSourceValue v = (FastSourceValue) another;
             return size == v.size && Arrays.equals(instructions, v.instructions);
-    	} else {
-    		return false;
-    	}
+        } else {
+            return false;
+        }
     }
 
     public int hashCode() {
-    	return Arrays.hashCode(instructions);
+        return Arrays.hashCode(instructions);
     }
 
 }

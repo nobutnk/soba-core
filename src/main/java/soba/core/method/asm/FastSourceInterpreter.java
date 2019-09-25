@@ -54,25 +54,24 @@ import org.objectweb.asm.tree.analysis.Value;
 import soba.util.ObjectIdMap;
 
 public class FastSourceInterpreter extends Interpreter<Value> implements Opcodes {
-	
-	public static final int METHOD_ENTRY = -1;
-	private ObjectIdMap<AbstractInsnNode> instructions;
-	
-	public FastSourceInterpreter(ObjectIdMap<AbstractInsnNode> instructions) {
-		super(ASM5);
-		this.instructions = instructions;
-	}
 
-	/**
-	 * This implementation is different from SourceInterpreter.
-	 * We distinguish a method parameter with an "un-initialized" 
-	 * entry for double-word data.
-	 */
+    public static final int METHOD_ENTRY = -1;
+    private ObjectIdMap<AbstractInsnNode> instructions;
+
+    public FastSourceInterpreter(ObjectIdMap<AbstractInsnNode> instructions) {
+        super(ASM5);
+        this.instructions = instructions;
+    }
+
+    /**
+     * This implementation is different from SourceInterpreter. We distinguish a
+     * method parameter with an "un-initialized" entry for double-word data.
+     */
     public Value newValue(final Type type) {
-    	if (type == null) {
-    		// an anonymous value that fills the second entry for double-word data.
-    		return new FastSourceValue(1);
-    	} else if (type == Type.VOID_TYPE) {
+        if (type == null) {
+            // an anonymous value that fills the second entry for double-word data.
+            return new FastSourceValue(1);
+        } else if (type == Type.VOID_TYPE) {
             return null;
         } else {
             return new FastSourceValue(type.getSize(), METHOD_ENTRY);
@@ -82,21 +81,21 @@ public class FastSourceInterpreter extends Interpreter<Value> implements Opcodes
     public Value newOperation(final AbstractInsnNode insn) {
         int size;
         switch (insn.getOpcode()) {
-            case LCONST_0:
-            case LCONST_1:
-            case DCONST_0:
-            case DCONST_1:
-                size = 2;
-                break;
-            case LDC:
-                Object cst = ((LdcInsnNode) insn).cst;
-                size = cst instanceof Long || cst instanceof Double ? 2 : 1;
-                break;
-            case GETSTATIC:
-                size = Type.getType(((FieldInsnNode) insn).desc).getSize();
-                break;
-            default:
-                size = 1;
+        case LCONST_0:
+        case LCONST_1:
+        case DCONST_0:
+        case DCONST_1:
+            size = 2;
+            break;
+        case LDC:
+            Object cst = ((LdcInsnNode) insn).cst;
+            size = cst instanceof Long || cst instanceof Double ? 2 : 1;
+            break;
+        case GETSTATIC:
+            size = Type.getType(((FieldInsnNode) insn).desc).getSize();
+            break;
+        default:
+            size = 1;
         }
         return new FastSourceValue(size, instructions.getId(insn));
     }
@@ -105,68 +104,59 @@ public class FastSourceInterpreter extends Interpreter<Value> implements Opcodes
         return new FastSourceValue(value.getSize(), instructions.getId(insn));
     }
 
-    public Value unaryOperation(final AbstractInsnNode insn, final Value value)
-    {
+    public Value unaryOperation(final AbstractInsnNode insn, final Value value) {
         int size;
         switch (insn.getOpcode()) {
-            case LNEG:
-            case DNEG:
-            case I2L:
-            case I2D:
-            case L2D:
-            case F2L:
-            case F2D:
-            case D2L:
-                size = 2;
-                break;
-            case GETFIELD:
-                size = Type.getType(((FieldInsnNode) insn).desc).getSize();
-                break;
-            default:
-                size = 1;
+        case LNEG:
+        case DNEG:
+        case I2L:
+        case I2D:
+        case L2D:
+        case F2L:
+        case F2D:
+        case D2L:
+            size = 2;
+            break;
+        case GETFIELD:
+            size = Type.getType(((FieldInsnNode) insn).desc).getSize();
+            break;
+        default:
+            size = 1;
         }
         return new FastSourceValue(size, instructions.getId(insn));
     }
 
-    public Value binaryOperation(
-        final AbstractInsnNode insn,
-        final Value value1,
-        final Value value2)
-    {
+    public Value binaryOperation(final AbstractInsnNode insn, final Value value1, final Value value2) {
         int size;
         switch (insn.getOpcode()) {
-            case LALOAD:
-            case DALOAD:
-            case LADD:
-            case DADD:
-            case LSUB:
-            case DSUB:
-            case LMUL:
-            case DMUL:
-            case LDIV:
-            case DDIV:
-            case LREM:
-            case DREM:
-            case LSHL:
-            case LSHR:
-            case LUSHR:
-            case LAND:
-            case LOR:
-            case LXOR:
-                size = 2;
-                break;
-            default:
-                size = 1;
+        case LALOAD:
+        case DALOAD:
+        case LADD:
+        case DADD:
+        case LSUB:
+        case DSUB:
+        case LMUL:
+        case DMUL:
+        case LDIV:
+        case DDIV:
+        case LREM:
+        case DREM:
+        case LSHL:
+        case LSHR:
+        case LUSHR:
+        case LAND:
+        case LOR:
+        case LXOR:
+            size = 2;
+            break;
+        default:
+            size = 1;
         }
         return new FastSourceValue(size, instructions.getId(insn));
     }
 
-    public Value ternaryOperation(
-        final AbstractInsnNode insn,
-        final Value value1,
-        final Value value2,
-        final Value value3)
-    {
+    public Value ternaryOperation(final AbstractInsnNode insn, final Value value1, final Value value2,
+            final Value value3) {
         return new FastSourceValue(1, instructions.getId(insn));
     }
 
@@ -175,31 +165,28 @@ public class FastSourceInterpreter extends Interpreter<Value> implements Opcodes
         if (insn.getOpcode() == MULTIANEWARRAY) {
             size = 1;
         } else if (insn.getOpcode() == INVOKEDYNAMIC) {
-        	 size = Type.getReturnType(((InvokeDynamicInsnNode) insn).desc).getSize();
+            size = Type.getReturnType(((InvokeDynamicInsnNode) insn).desc).getSize();
         } else {
             size = Type.getReturnType(((MethodInsnNode) insn).desc).getSize();
         }
         return new FastSourceValue(size, instructions.getId(insn));
     }
 
-    public void returnOperation(
-        final AbstractInsnNode insn,
-        final Value value,
-        final Value expected)
-    {
+    public void returnOperation(final AbstractInsnNode insn, final Value value, final Value expected) {
     }
 
     /**
-     * Implementation Note: This method must return v 
-     * if v contains all elements in w.
+     * Implementation Note: This method must return v if v contains all elements in
+     * w.
      */
     public Value merge(final Value v, final Value w) {
-        if (v == w) return v;
-        FastSourceValue dv = (FastSourceValue)v;
-        FastSourceValue dw = (FastSourceValue)w;
+        if (v == w)
+            return v;
+        FastSourceValue dv = (FastSourceValue) v;
+        FastSourceValue dw = (FastSourceValue) w;
 
-    	if (dv.getSize() == dw.getSize() && dv.containsAll(dw)) {
-        	return v;
+        if (dv.getSize() == dw.getSize() && dv.containsAll(dw)) {
+            return v;
         } else {
             return new FastSourceValue(dv, dw);
         }

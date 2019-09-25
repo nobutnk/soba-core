@@ -15,50 +15,50 @@ import soba.core.JavaProgram;
 
 public class FieldInfoTest {
 
-	private static FieldInfo fi;
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		JavaProgram program = JavaProgramTest.readExampleProgram();
-		ClassInfo c = program.getClassInfo(ExampleProgram.CLASS_C);
-		fi = c.getField(0);
-	}
+    private static FieldInfo fi;
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+        JavaProgram program = JavaProgramTest.readExampleProgram();
+        ClassInfo c = program.getClassInfo(ExampleProgram.CLASS_C);
+        fi = c.getField(0);
+    }
 
-	@Before
-	public void setUp() throws Exception {
-	}
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    }
 
-	@After
-	public void tearDown() throws Exception {
-	}
+    @Before
+    public void setUp() throws Exception {
+    }
 
-	@Test
-	public void testGetPackageName() {
-		assertThat(fi.getPackageName(), is("soba/testdata/inheritance1"));
-	}
+    @After
+    public void tearDown() throws Exception {
+    }
 
-	@Test
-	public void testGetClassName() {
-		assertThat(fi.getClassName(), is("soba/testdata/inheritance1/C"));
-	}
+    @Test
+    public void testGetPackageName() {
+        assertThat(fi.getPackageName(), is("soba/testdata/inheritance1"));
+    }
 
-	@Test
-	public void testGetFieldName() {
-		assertThat(fi.getFieldName(), is("x"));
-	}
+    @Test
+    public void testGetClassName() {
+        assertThat(fi.getClassName(), is("soba/testdata/inheritance1/C"));
+    }
 
-	@Test
-	public void testGetDescriptor() {
-		assertThat(fi.getDescriptor(), is("I"));
-	}
+    @Test
+    public void testGetFieldName() {
+        assertThat(fi.getFieldName(), is("x"));
+    }
 
-	@Test
-	public void testGetFieldTypeName() {
-		assertThat(fi.getFieldTypeName(), is("int"));
-	}
+    @Test
+    public void testGetDescriptor() {
+        assertThat(fi.getDescriptor(), is("I"));
+    }
+
+    @Test
+    public void testGetFieldTypeName() {
+        assertThat(fi.getFieldTypeName(), is("int"));
+    }
 
 }

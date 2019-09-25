@@ -13,40 +13,40 @@ import org.junit.Test;
 
 public class JavaProgramTest implements ExampleProgram {
 
-	private static JavaProgram program;
-	
-	public static JavaProgram readExampleProgram() {
-		Directory dir = new Directory(new File("target/test-classes/soba/testdata/"));
-		JavaProgram program = new JavaProgram(new IClassList[] {dir});
-		return program;
-	}
-	
-	@BeforeClass
-	public static void setUpBeforeClass() {
-		program = readExampleProgram();
-	}
+    private static JavaProgram program;
 
-	@Test
-	public void testJavaProgram01() {
-		assertThat(program.getClasses(), is(notNullValue()));
-		assertThat(program.getClasses(), hasSize(23));
+    public static JavaProgram readExampleProgram() {
+        Directory dir = new Directory(new File("target/test-classes/soba/testdata/"));
+        JavaProgram program = new JavaProgram(new IClassList[] { dir });
+        return program;
+    }
 
-		assertThat(program.getFiltered(), is(empty()));
-		assertThat(program.getDuplicated(), is(empty()));
-		assertThat(program.getErrors(), is(empty()));
+    @BeforeClass
+    public static void setUpBeforeClass() {
+        program = readExampleProgram();
+    }
 
-		assertThat(program.getClassHierarchy(), is(notNullValue()));
+    @Test
+    public void testJavaProgram01() {
+        assertThat(program.getClasses(), is(notNullValue()));
+        assertThat(program.getClasses(), hasSize(23));
 
-		assertThat(program.getClassInfo(CLASS_C), is(notNullValue()));
-		assertThat(program.getClassInfo(CLASS_D), is(notNullValue()));
-		assertThat(program.getClassInfo(CLASS_E), is(notNullValue()));
-		assertThat(program.getClassInfo(CLASS_F), is(notNullValue()));
-		assertThat(program.getClassInfo(CLASS_G), is(notNullValue()));
-		assertThat(program.getClassInfo(CLASS_H), is(notNullValue()));
-		assertThat(program.getClassInfo(CLASS_I), is(notNullValue()));
-		assertThat(program.getClassInfo(CLASS_J), is(notNullValue()));
-		assertThat(program.getClassInfo(CLASS_K), is(notNullValue()));
-		assertThat(program.getClassInfo("NotExistClass"), is(nullValue()));
-	}
+        assertThat(program.getFiltered(), is(empty()));
+        assertThat(program.getDuplicated(), is(empty()));
+        assertThat(program.getErrors(), is(empty()));
+
+        assertThat(program.getClassHierarchy(), is(notNullValue()));
+
+        assertThat(program.getClassInfo(CLASS_C), is(notNullValue()));
+        assertThat(program.getClassInfo(CLASS_D), is(notNullValue()));
+        assertThat(program.getClassInfo(CLASS_E), is(notNullValue()));
+        assertThat(program.getClassInfo(CLASS_F), is(notNullValue()));
+        assertThat(program.getClassInfo(CLASS_G), is(notNullValue()));
+        assertThat(program.getClassInfo(CLASS_H), is(notNullValue()));
+        assertThat(program.getClassInfo(CLASS_I), is(notNullValue()));
+        assertThat(program.getClassInfo(CLASS_J), is(notNullValue()));
+        assertThat(program.getClassInfo(CLASS_K), is(notNullValue()));
+        assertThat(program.getClassInfo("NotExistClass"), is(nullValue()));
+    }
 
 }
