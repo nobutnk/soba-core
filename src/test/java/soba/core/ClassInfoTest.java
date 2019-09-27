@@ -144,4 +144,41 @@ public class ClassInfoTest implements ExampleProgram {
         assertThat(c.isEnum(), is(true));
     }
 
+    @Test
+    public void testClassInfo05() throws Exception {
+        String fileName = "target/test-classes/" + CLASS_M + ".class";
+        ClassInfo c = new ClassInfo(fileName, new FileInputStream(fileName));
+
+        assertThat(c.getPackageName(), is("soba/testdata/inheritance1"));
+        assertThat(c.getClassName(), is(CLASS_M));
+        assertThat(c.getSuperClass(), is(CLASS_C));
+        assertThat(c.getInterfaces(),
+                containsInAnyOrder("soba/testdata/inheritance1/I", "soba/testdata/inheritance1/K"));
+        assertThat(c.getHash(), is(notNullValue()));
+        assertThat(c.getClassDirPath(), is("soba" + File.separator + "testdata" + File.separator + "inheritance1"));
+        assertThat(c.getClassFileName(), is(fileName));
+        assertThat(c.getSourceFileName(),
+                is("soba" + File.separator + "testdata" + File.separator + "inheritance1" + File.separator + "M.java"));
+        assertThat(c.getLabel(), is(nullValue()));
+        assertThat(c.isLibrary(), is(false));
+
+        assertThat(c.getMethodCount(), is(15));
+        assertThat(c.getMethods(), hasSize(15));
+        assertThat(c.getMethod(0), is(notNullValue()));
+        assertThat(c.findMethod("m", "()V"), is(notNullValue()));
+        assertThat(c.findMethod("n", "()V"), is(notNullValue()));
+        assertThat(c.findMethod("x", "(I)V"), is(notNullValue()));
+        assertThat(c.findMethod("example", "(IJDLjava/lang/String;)I"), is(notNullValue()));
+        assertThat(c.findMethod("toString", "()Ljava/lang/String;"), is(notNullValue()));
+        assertThat(c.findMethod("notExist", "()V"), is(nullValue()));
+        assertThat(c.findMethod("lambda$new$0", "(Ljava/lang/String;)V"), is(notNullValue()));
+
+        assertThat(c.getFieldCount(), is(1));
+        assertThat(c.getFields().get(0), is(notNullValue()));
+
+        assertThat(c.isInterface(), is(false));
+        assertThat(c.isEnum(), is(false));
+
+    }
+
 }

@@ -23,6 +23,7 @@ public class CallGraphTest {
     private static ClassInfo classD;
     private static ClassInfo classE;
     private static ClassInfo classG;
+    private static ClassInfo classM;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -33,6 +34,7 @@ public class CallGraphTest {
         classD = program.getClassInfo(ExampleProgram.CLASS_D);
         classE = program.getClassInfo(ExampleProgram.CLASS_E);
         classG = program.getClassInfo(ExampleProgram.CLASS_G);
+        classM = program.getClassInfo(ExampleProgram.CLASS_M);
     }
 
     @Test
@@ -65,9 +67,10 @@ public class CallGraphTest {
         MethodInfo caller2 = classE.findMethod("testDynamicBinding2", "()V");
         MethodInfo caller3 = classE.findMethod("testDynamicBinding5", "(Lsoba/testdata/inheritance1/C;)V");
         MethodInfo caller4 = classD.findMethod("testPackagePrivate3", "()V");
+        MethodInfo caller5 = classM.findMethod("testPackagePrivate3", "()V");
 
         List<MethodInfo> callers = callGraph.getCallers(callee);
-        assertThat(callers, containsInAnyOrder(caller1, caller2, caller3, caller4));
+        assertThat(callers, containsInAnyOrder(caller1, caller2, caller3, caller4, caller5));
     }
 
     @Test
@@ -77,9 +80,19 @@ public class CallGraphTest {
         MethodInfo caller1 = classD.findMethod("m", "()V");
         MethodInfo caller2 = classE.findMethod("<init>", "()V");
         MethodInfo caller3 = classE.findMethod("main", "([Ljava/lang/String;)V");
+        MethodInfo caller4 = classM.findMethod("m", "()V");
 
         List<MethodInfo> callers = callGraph.getAllCallers(callee);
-        assertThat(callers, containsInAnyOrder(caller1, caller2, caller3));
+        assertThat(callers, containsInAnyOrder(caller1, caller2, caller3, caller4));
+    }
+
+    @Test
+    public void testGetAllCallers02() {
+        MethodInfo callee = classM.findMethod("o", "(Ljava/lang/String;)V");
+        MethodInfo caller1 = classM.findMethod("lambda$new$0", "(Ljava/lang/String;)V");
+
+        List<MethodInfo> callers = callGraph.getAllCallers(callee);
+        assertThat(callers, containsInAnyOrder(caller1));
     }
 
 }

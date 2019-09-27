@@ -29,7 +29,7 @@ public class JavaProgramTest implements ExampleProgram {
     @Test
     public void testJavaProgram01() {
         assertThat(program.getClasses(), is(notNullValue()));
-        assertThat(program.getClasses(), hasSize(23));
+        assertThat(program.getClasses(), hasSize(24));
 
         assertThat(program.getFiltered(), is(empty()));
         assertThat(program.getDuplicated(), is(empty()));
@@ -46,6 +46,7 @@ public class JavaProgramTest implements ExampleProgram {
         assertThat(program.getClassInfo(CLASS_I), is(notNullValue()));
         assertThat(program.getClassInfo(CLASS_J), is(notNullValue()));
         assertThat(program.getClassInfo(CLASS_K), is(notNullValue()));
+        assertThat(program.getClassInfo(CLASS_M), is(notNullValue()));
         assertThat(program.getClassInfo("NotExistClass"), is(nullValue()));
     }
 
