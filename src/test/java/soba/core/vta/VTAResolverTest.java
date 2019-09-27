@@ -4,9 +4,7 @@ import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -143,7 +141,7 @@ public class VTAResolverTest implements ExampleProgram {
                     assertThat(methods, is(emptyArray()));
                 } else if (counter == 1) {
                     MethodInfo[] methods = resolver.resolveCall(m.getCallSite(i));
-                    checkClasses(methods, CLASS_C, CLASS_D, CLASS_G);
+                    checkClasses(methods, CLASS_C, CLASS_D, CLASS_G, CLASS_M);
                 }
                 counter++;
             }
@@ -231,7 +229,7 @@ public class VTAResolverTest implements ExampleProgram {
                     MethodInfo[] methods = resolver.resolveCall(m.getCallSite(i));
                     counter++;
                     if (counter == 1) {
-                        checkClasses(methods, CLASS_C, CLASS_D);
+                        checkClasses(methods, CLASS_C, CLASS_D, CLASS_M);
                     } else {
                         checkClasses(methods, CLASS_D);
                     }
